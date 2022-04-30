@@ -10,7 +10,7 @@
           <div class="header">
             <a href="/">
               <img :src="require('../../src/assets/logo.png')" class="logo" alt="logo">
-              <span class="title">知识付费后台管理</span>
+              <span class="title">普林互联网医院管理端</span>
             </a>
           </div>
           <!--<div class="desc">-->

@@ -106,7 +106,7 @@
   import { getMemberList, userDisable, userEnable, userSave } from '@/api/userService'
   import CreateForm from './modules/CreateForm'
   import { getTextByValue } from '@/utils/dictUtils'
-  import ButtonExport from '@/views/user/modules/ButtonExport'
+  import ButtonExport from '@/components/ButtonExport/ButtonExport'
 
   const columns = [
     {

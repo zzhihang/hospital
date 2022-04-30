@@ -57,7 +57,7 @@ const constantRouterComponents = {
   '/user/member': () => import('@/views/user/MemberList'),
 
   '/order': RouteView,
-  '/order/list': () => import('@/views/order/OrderList'),
+  '/order/list': () => import('@/views/order/record'),
 
   '/content': RouteView,
   '/content/list': () => import('@/views/content/ContentList'),

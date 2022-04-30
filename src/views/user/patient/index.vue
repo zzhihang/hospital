@@ -1,0 +1,214 @@
+<template>
+  <page-header-wrapper>
+    <a-card :bordered="false">
+      <div class="table-page-search-wrapper">
+        <search-form :list="searchList" @search="onSearch">
+          <button-export
+            style="margin-left: 8px"
+            :ids="selectedIds"
+            url="/sysdept/export"
+          >导出</button-export>
+          <button-export
+            style="margin-left: 8px"
+            url="/admin/user/tz/export"
+            bill-type="blog"
+          >导入</button-export>
+          <a-button type="primary" style="margin-left: 8px;" @click="handleDelete">删除</a-button>
+        </search-form>
+      </div>
+
+      <s-table
+        style="margin-top: 10px;"
+        ref="table"
+        size="default"
+        rowKey="key"
+        :columns="columns"
+        :data="loadData"
+        :rowSelection="rowSelection"
+        showPagination="auto"
+      >
+        <span slot="serial" slot-scope="text, record, index">
+          {{ index + 1 }}
+        </span>
+
+        <span slot="action" slot-scope="text, record">
+          <template>
+            <a @click="handleEdit(record)">编辑</a>
+          </template>
+        </span>
+      </s-table>
+      <create-form
+        ref="createModal"
+        :visible="visible"
+        :loading="confirmLoading"
+        :model="mdl"
+        :create-user-id="createUserId"
+        :create-user-url="createUserUrl"
+        @cancel="handleCancel"
+        @ok="handleOk"
+      />
+    </a-card>
+  </page-header-wrapper>
+</template>
+
+<script>
+  import { STable } from '../../../components'
+  import { ENABLE_STATUS } from '../../../utils/dict'
+  import CreateForm from './component/CreateForm'
+  import ButtonExport from '../../../components/ButtonExport/ButtonExport'
+  import SearchForm from '../../../components/SearchForm/SearchForm'
+  import { patientList, patientSave } from '@/api/customerService'
+  import { SEX_TYPE } from '@/utils/dict'
+
+  const columns = [
+    {
+      title: '序号',
+      scopedSlots: { customRender: 'serial' }
+    },
+    {
+      title: '就诊人姓名',
+      dataIndex: 'name'
+    },{
+      title: '就诊端用户手机号',
+      dataIndex: 'phone'
+    },{
+      title: '就诊人联系方式',
+      dataIndex: 'userPhone'
+    },{
+      title: '就诊人性别',
+      dataIndex: 'sex'
+    },{
+      title: '身份证号',
+      dataIndex: 'idNumber'
+    },{
+      title: '出生日期',
+      dataIndex: 'name'
+    },{
+      title: '所在地区',
+      dataIndex: 'province'
+    },{
+      title: '就诊人关系',
+      dataIndex: 'relationship'
+    },
+    {
+      title: '操作',
+      dataIndex: 'action',
+      width: '200px',
+      scopedSlots: { customRender: 'action' }
+    }
+  ]
+
+  export default {
+    name: 'TableList',
+    components: {
+      STable,
+      CreateForm,
+      ButtonExport,
+      SearchForm
+    },
+    data() {
+      return {
+        searchList: [{
+          field: 'name',
+          label: '就诊人姓名'
+        },{
+          field: 'sex',
+          label: '就诊人性别'
+        },{
+          field: 'province',
+          label: '所在地区'
+        },{
+          field: 'phone',
+          label: '就诊人联系方式',
+          type: 'select',
+          options: SEX_TYPE
+        }],
+        ENABLE_STATUS: [{text: '全部', value: ''}].concat(ENABLE_STATUS),
+        visible: false,
+        editTemplateVisible: false,
+        exportSmsVisible: false,
+        popVisible: false,
+        confirmLoading: false,
+        mdl: null,
+        mdl2: null,
+        createUserId: '',
+        createUserUrl: '',
+        columns,
+        ctime: '',
+        queryParam: {},
+        loadData: parameter => {
+          const requestParameters = Object.assign({}, parameter, this.queryParam)
+          return patientList(requestParameters)
+            .then(res => {
+              return res.data
+            })
+        },
+        selectedRowKeys: [],
+        selectedRows: []
+      }
+    },
+    computed: {
+      rowSelection() {
+        return {
+          selectedRowKeys: this.selectedRowKeys,
+          onChange: this.onSelectChange
+        }
+      },
+      selectedIds(){
+        return this.selectedRows.map(item => item.id);
+      }
+    },
+    methods: {
+      onSearch(params){
+        this.queryParam = params;
+        this.$refs.table.refresh(true)
+      },
+      handleAdd() {
+        this.mdl = null
+        this.visible = true
+      },
+      handleEdit (record) {
+        this.visible = true
+        this.mdl = { ...record }
+      },
+      handleOk() {
+        const form = this.$refs.createModal.form
+        this.confirmLoading = true
+        form.validateFields(async (errors, values) => {
+          if (!errors) {
+            const result = await patientSave(values)
+            if(result.success){
+              this.confirmLoading = false
+              form.resetFields()
+              this.$refs.table.refresh()
+              this.$message.info('新增成功')
+            }else{
+              this.$message.error(result.msg);
+            }
+            this.visible = false;
+          } else {
+            this.confirmLoading = false
+          }
+        })
+      },
+      handleCancel() {
+        this.visible = false
+        const form = this.$refs.createModal.form
+        form.resetFields() // 清理表单数据（可不做）
+      },
+      onSelectChange(selectedRowKeys, selectedRows) {
+        this.selectedRowKeys = selectedRowKeys
+        this.selectedRows = selectedRows
+      }
+    }
+  }
+</script>
+<style lang="less" scoped>
+  /deep/ .ant-form-item-children {
+    display: flex;
+  }
+
+  /deep/ .ant-checkbox-group-item {
+    display: block;
+  }
+</style>

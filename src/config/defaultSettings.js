@@ -23,7 +23,7 @@ export default {
   menu: {
     locale: true
   },
-  title: '知识付费后台管理',
+  title: '普林互联网医院管理端',
   pwa: false,
   iconfontUrl: '',
   production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true'

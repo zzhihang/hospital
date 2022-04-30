@@ -99,7 +99,7 @@
   import { ENABLE_STATUS } from '@/utils/dict'
   import { getBloggerList, updateWxTemplate, userDisable, userEnable, userSave } from '@/api/userService'
   import CreateForm from './modules/CreateForm'
-  import ButtonExport from '@/views/user/modules/ButtonExport'
+  import ButtonExport from '@/components/ButtonExport/ButtonExport'
   import WxTemplate from '@/views/user/modules/WxTemplate'
 
   const columns = [

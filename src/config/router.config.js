@@ -16,7 +16,7 @@ export const asyncRouterMap = [
     redirect: '/user/blogger',
     children: [
       // dashboard
-     /* {
+      {
         path: '/dashboard',
         name: 'dashboard',
         redirect: '/dashboard/workplace',
@@ -42,7 +42,7 @@ export const asyncRouterMap = [
             meta: { title: 'menu.dashboard.workplace', keepAlive: true, permission: ['dashboard'] }
           }
         ]
-      },*/
+      },
       // forms
      /* {
         path: '/form',
@@ -174,39 +174,71 @@ export const asyncRouterMap = [
         ]
       },*/
 
+      {
+        path: '/doctor_manage',
+        name: 'doctor_manage',
+        component: RouteView,
+        redirect: '/doctor/blogger',
+        meta: { title: '医生管理', icon: 'warning'},
+        children: [
+          {
+            path: '/doctor_manage/doctor',
+            name: 'doctor',
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/doctor_manage/doctor'),
+            meta: { title: '医生信息'},
+          },
+          {
+            path: '/doctor_manage/doctor/detail',
+            name: 'DoctorDetail',
+            hidden: true,
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/doctor_manage/doctor/DoctorDetail'),
+            meta: { title: '医生信息详情'},
+          },
+          {
+            path: '/doctor_manage/service',
+            name: 'service',
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/doctor_manage/service'),
+            meta: { title: '医生服务项目'}
+          },
+          {
+            path: '/doctor_manage/hospital',
+            name: 'hospital',
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/doctor_manage/hospital'),
+            meta: { title: '医院信息'}
+          },
+          {
+            path: '/doctor_manage/department',
+            name: 'department',
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/doctor_manage/department'),
+            meta: { title: '科室信息'}
+          },
+          {
+            path: '/doctor_manage/disease',
+            name: 'disease',
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/doctor_manage/disease'),
+            meta: { title: '疾病信息'}
+          },
+        ]
+      },
       //user
       {
         path: '/user',
         name: 'user',
         component: RouteView,
         redirect: '/user/blogger',
-        meta: { title: '用户管理', icon: 'warning'},
+        meta: { title: '用户就诊人管理', icon: 'warning'},
         children: [
           {
-            path: '/user/blogger',
-            name: 'BloggerList',
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/user/BloggerList'),
-            meta: { title: '糖主管理'},
+            path: '/user/customer',
+            name: 'customer',
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/user/customer'),
+            meta: { title: '就诊端用户'},
           },
           {
-            path: '/user/blogger/detail',
-            name: 'BloggerListDetail',
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/user/BloggerDetail'),
-            hidden: true,
-            meta: { title: '查看详情'}
-          },
-          {
-            path: '/user/member',
-            name: 'MemberList',
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/user/MemberList'),
-            meta: { title: '会员管理'}
-          },
-          {
-            path: '/user/member/detail',
-            name: 'MemberDetail',
-            hidden: true,
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/user/MemberDetail'),
-            meta: { title: '查看详情'}
+            path: '/user/patient',
+            name: 'patient',
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/user/patient'),
+            meta: { title: '就诊端信息'},
           },
         ]
       },
@@ -222,8 +254,46 @@ export const asyncRouterMap = [
           {
             path: '/order/list',
             name: 'OrderList',
-            component: () => import(/* webpackChunkName: "fail" */ '@/views/order/OrderList'),
-            meta: { title: '订单管理'}
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/order/record'),
+            meta: { title: '订单记录'}
+          },{
+            path: '/order/detail',
+            name: 'OrderDetail',
+            hidden: true,
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/order/record/OrderDetail'),
+            meta: { title: '订单详情'}
+          },{
+            path: '/order/platform',
+            name: 'OrderPlatform',
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/order/platform'),
+            meta: { title: '服务平台每日收益统计'}
+          },{
+            path: '/order/doctor',
+            name: 'OrderDoctor',
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/order/doctor'),
+            meta: { title: '医生累计收益统计'}
+          },{
+            path: '/order/income',
+            name: 'income',
+            hidden: true,
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/order/income/income'),
+            meta: { title: '收益详情'}
+          },
+        ]
+      },
+      // order
+      {
+        path: '/admin',
+        name: 'admin',
+        component: RouteView,
+        redirect: '/admin/list',
+        meta: { title: '管理员管理', icon: 'warning'},
+        children: [
+          {
+            path: '/admin/list',
+            name: 'admin',
+            component: () => import(/* webpackChunkName: "fail" */ '@/views/admin/admin'),
+            meta: { title: '管理员管理'}
           }
         ]
       },
