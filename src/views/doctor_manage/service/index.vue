@@ -3,7 +3,7 @@
     <a-card :bordered="false">
       <div class="table-page-search-wrapper">
         <search-form :list="searchList" @search="onSearch">
-          <a-button type="primary" v-allow="15" @click="handleAudit">批量审核</a-button>
+          <a-button type="primary" @click="handleAudit">批量审核</a-button>
           <button-export
             style="margin-left: 8px"
             :ids="selectedIds"

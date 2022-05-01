@@ -1,6 +1,6 @@
 <template>
   <div style="display: inline-block">
-    <a-button style="margin-left: 8px" type="primary" v-allow="13" @click="exportClick">
+    <a-button style="margin-left: 8px" type="primary" @click="exportClick">
       <slot></slot>
     </a-button>
     <sms-modal @onOk="exportData" :to-phone="toPhone" :bill-type="billType" :show.sync="exportSmsVisible"/>

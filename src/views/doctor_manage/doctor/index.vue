@@ -3,7 +3,7 @@
     <a-card :bordered="false">
       <div class="table-page-search-wrapper">
         <search-form :list="searchList" @search="onSearch">
-          <a-button type="primary" v-allow="15" @click="handleAdd">新增医生</a-button>
+          <a-button type="primary"  @click="handleAdd">新增医生</a-button>
           <button-export
             style="margin-left: 8px"
             :ids="selectedIds"
@@ -90,7 +90,7 @@
       dataIndex: 'deptName',
     },{
       title: '职称',
-      dataIndex: 'major',
+      dataIndex: 'title',
     },{
       title: '疾病类型',
       dataIndex: 'diseaseName',

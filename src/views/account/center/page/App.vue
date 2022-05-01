@@ -17,7 +17,7 @@
               </div>
               <div>
                 <p>新增用户</p>
-                <p>{{ item.newUser | NumberFormat }}</p>
+                <p>{{ item.newUser}}</p>
               </div>
             </div>
           </a-card-meta>

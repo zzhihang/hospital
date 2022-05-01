@@ -3,7 +3,7 @@
     <a-card :bordered="false">
       <div class="table-page-search-wrapper">
         <search-form :list="searchList" @search="onSearch">
-          <a-button type="primary" v-allow="15" @click="handleAdd">新增医院</a-button>
+          <a-button type="primary" @click="handleAdd">新增医院</a-button>
           <button-export
             style="margin-left: 8px"
             :ids="selectedIds"
@@ -107,14 +107,8 @@
         }],
         ENABLE_STATUS: [{text: '全部', value: ''}].concat(ENABLE_STATUS),
         visible: false,
-        editTemplateVisible: false,
-        exportSmsVisible: false,
-        popVisible: false,
         confirmLoading: false,
         mdl: null,
-        mdl2: null,
-        createUserId: '',
-        createUserUrl: '',
         columns,
         queryParam: {},
         loadData: parameter => {

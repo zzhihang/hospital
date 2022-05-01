@@ -11,7 +11,7 @@
             <!--</a-col>-->
             <a-col :md="8" :sm="24">
             <span class="table-page-search-submitButtons">
-              <a-button type="primary" @click="onCreate" v-allow="35">创建角色</a-button>
+              <a-button type="primary" @click="onCreate" >创建角色</a-button>
             </span>
             </a-col>
           </a-row>
@@ -28,7 +28,7 @@
         >
           <!--:row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange, type: 'radio' }"-->
           <span slot="action" slot-scope="text, record">
-          <a @click="onRowEditClick(record)" v-allow="36">编辑</a>
+          <a @click="onRowEditClick(record)" >编辑</a>
         </span>
           <span slot="serial" slot-scope="text, record, index">
           {{ index + 1 }}

@@ -52,24 +52,36 @@ const constantRouterComponents = {
   BindingSettings: () => import('@/views/account/settings/Binding'),
   NotificationSettings: () => import('@/views/account/settings/Notification'),
 
+  '/dashboard': () => import('@/views/dashboard/Analysis'),
+
+  '/doctor_manage': RouteView,
+  '/doctor_manage/doctor': () => import(/* webpackChunkName: "fail" */ '@/views/doctor_manage/doctor'),
+  '/doctor_manage/service': () => import(/* webpackChunkName: "fail" */ '@/views/doctor_manage/service'),
+  '/doctor_manage/hospital': () => import(/* webpackChunkName: "fail" */ '@/views/doctor_manage/hospital'),
+  '/doctor_manage/department': () => import(/* webpackChunkName: "fail" */ '@/views/doctor_manage/department'),
+  '/doctor_manage/disease': () => import(/* webpackChunkName: "fail" */ '@/views/doctor_manage/disease'),
+
   '/user': RouteView,
-  '/user/blogger': () => import('@/views/user/BloggerList'),
-  '/user/member': () => import('@/views/user/MemberList'),
+  '/user/customer': () => import('@/views/user/customer'),
+  '/user/patient': () => import('@/views/user/patient'),
 
   '/order': RouteView,
   '/order/list': () => import('@/views/order/record'),
+  '/order/platform': () => import('@/views/order/platform'),
+  '/order/doctor': () => import('@/views/order/doctor'),
 
-  '/content': RouteView,
-  '/content/list': () => import('@/views/content/ContentList'),
+  '/recommend': RouteView,
+  '/recommend/list': () => import(/* webpackChunkName: "fail" */ '@/views/recommend'),
 
-  '/sys': RouteView,
-  '/sys/log': () => import('@/views/sys/LogList'),
+  '/admin': RouteView,
+  '/admin/list': () => import('@/views/admin/admin'),
 
-  '/permission': RouteView,
-  '/permission/role': () => import('@/views/permission/RoleList'),
-  '/permission/user': () => import('@/views/permission/UserList'),
-  '/permission/dictionary': () => import('@/views/permission/dictionary'),
+  '/dictionary': RouteView,
+  '/dictionary/list': () => import('@/views/dictionary'),
 
+  '/account': RouteView,
+  '/account/settings': () => import('@/views/account/settings/BasicSetting'),
+  '/account/sys': () => import('@/views/account/settings/sysSetting'),
 }
 
 // 前端未找到页面路由（固定不用改）
@@ -104,9 +116,7 @@ export const generatorDynamicRouter = roles => {
     listToTree(roles, childrenNav, null)
     rootRouter.children = childrenNav
     menuNav.push(rootRouter)
-    console.log(menuNav)
     const routers = generator(menuNav)
-    console.log(routers)
     routers.push(notFoundRouter)
     resolve(routers)
   })

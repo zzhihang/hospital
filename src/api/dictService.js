@@ -20,3 +20,26 @@ export function dictHospital () {
     method: 'post',
   })
 }
+
+export function dicDoctor (params={}) {
+  return request({
+    url: '/doctor/query',
+    method: 'post',
+    data: params
+  })
+}
+
+export function dictAllList () {
+  return request({
+    url: '/admin/sysdict/all',
+    method: 'post',
+  })
+}
+
+export function dictSave (params) {
+  return request({
+    url: '/admin/sysdict/save',
+    method: 'post',
+    data: params
+  })
+}

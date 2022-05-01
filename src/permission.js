@@ -13,19 +13,19 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const allowList = ['login', 'register', 'registerResult'] // no redirect allowList
 const loginRoutePath = '/login'
-const defaultRoutePath = '/user/blogger'
+const defaultRoutePath = '/'
 
 //按扭权限指令
-Vue.directive('allow', {
-  inserted: (el, binding, vnode) => {
-    if(store.getters.roles){
-      const btnPermission = store.getters.roles.filter(item => item.type === 'B');
-      if (!btnPermission.find(item => String(item.id) === String(binding.value))) {
-        el.parentNode.removeChild(el)
-      }
-    }
-  }
-})
+// Vue.directive('allow', {
+//   inserted: (el, binding, vnode) => {
+//     if(store.getters.roles){
+//       const btnPermission = store.getters.roles.filter(item => item.type === 'B');
+//       if (!btnPermission.find(item => String(item.id) === String(binding.value))) {
+//         el.parentNode.removeChild(el)
+//       }
+//     }
+//   }
+// })
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar

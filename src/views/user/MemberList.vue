@@ -41,10 +41,10 @@
               </a-form-item>
             </a-col>
             <a-col :md="24" :sm="24" style="text-align: right">
-              <a-button type="primary" v-allow="20" @click="$refs.table.refresh(true)">查询</a-button>
+              <a-button type="primary"  @click="$refs.table.refresh(true)">查询</a-button>
               <button-export
                 style="margin-left: 8px"
-                v-allow="21"
+
                 :ids="selectedIds"
                 type="part"
                 bill-type="member"
@@ -52,7 +52,7 @@
               >导出</button-export>
               <button-export
                 style="margin-left: 8px"
-                v-allow="22"
+
                 url="/admin/user/pt/export"
                 bill-type="member"
               >全部导出</button-export>
@@ -76,13 +76,13 @@
         <span slot="serial" slot-scope="text, record, index">
           {{ index + 1 }}
         </span>
-        <span slot="disable" slot-scope="text, record, index" v-allow="24">
+        <span slot="disable" slot-scope="text, record, index" >
           <a-switch :checked="String(text) === '1'" checked-children="启用中" un-checked-children="禁用中" @change="onDisableChange(record)"/>
         </span>
 
         <span slot="action" slot-scope="text, record">
           <template>
-            <a @click="handleDetail(record)" v-allow="25">查看详情</a>
+            <a @click="handleDetail(record)" >查看详情</a>
           </template>
         </span>
       </s-table>

@@ -1,23 +1,29 @@
 <template>
+  <page-header-wrapper>
   <div class="account-settings-info-view">
     <a-row :gutter="16" type="flex" justify="center">
       <a-col :order="isMobile ? 2 : 1" :md="24" :lg="16">
-
         <a-form layout="vertical">
           <a-form-item
-            label="账号名称"
+            label="原密码"
             :required="true"
           >
-            <a-input v-model="name" placeholder="请输入" />
+            <a-input-password v-model="passwd" placeholder="请输入原密码"/>
           </a-form-item>
 
           <a-form-item
-            label="后台管理账号密码"
+            label="新密码"
             :required="true"
-            help="密码已通过MD5加密"
           >
-            <a-input-password v-model="passwd" placeholder="请输入"/>
+            <a-input-password v-model="passwd" placeholder="请输入新密码"/>
           </a-form-item>
+          <a-form-item
+            label="确认密码"
+            :required="true"
+          >
+            <a-input-password v-model="passwd" placeholder="请再次确认密码"/>
+          </a-form-item>
+
 
           <a-form-item style="text-align: center">
             <a-button type="primary" @click="onSaveClick">保存</a-button>
@@ -27,12 +33,12 @@
 
       </a-col>
       <a-col :order="1" :md="24" :lg="8" :style="{ minHeight: '180px' }">
-        <div class="ant-upload-preview" @click="$refs.modal.edit(1)" >
-          <div class="mask">
-            <a-icon type="plus" />
-          </div>
-          <img :src="option.img"/>
-        </div>
+        <!--<div class="ant-upload-preview" @click="$refs.modal.edit(1)" >-->
+          <!--<div class="mask">-->
+            <!--<a-icon type="plus" />-->
+          <!--</div>-->
+          <!--<img :src="option.img"/>-->
+        <!--</div>-->
       </a-col>
 
     </a-row>
@@ -40,6 +46,7 @@
     <avatar-modal ref="modal" @ok="setavatar"/>
 
   </div>
+  </page-header-wrapper>
 </template>
 
 <script>

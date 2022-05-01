@@ -3,11 +3,7 @@
     <a-card :bordered="false">
       <div class="table-page-search-wrapper">
         <search-form :list="searchList" @search="onSearch">
-          <button-export
-            style="margin-left: 8px"
-            :ids="selectedIds"
-            url="/sysdept/export"
-          >导出</button-export>
+          <a-button type="primary" @click="handleEdit">新增</a-button>
         </search-form>
       </div>
 
@@ -27,33 +23,44 @@
           <div slot="tags" slot-scope="text, record, index" style="text-align: left">
             <a-tag
               v-for="(tag, i) in text.split(',')"
-              :key="tag"
+              :key="i"
               style="margin-bottom: 10px;"
               :color="['pink', 'red', 'orange', 'green', 'cyan', 'blue', 'purple'][i % 7]"
             >
               {{ tag.toUpperCase() }}
             </a-tag>
           </div>
-
+        <span slot="disable" slot-scope="text, record, index">
+          <a-switch :checked="String(text) === '1'" checked-children="启用中" un-checked-children="禁用中"
+                    @change="onDisableChange(record)"/>
+        </span>
         <span slot="action" slot-scope="text, record">
           <template>
-            <a @click="handleDetail(record)">编辑</a>
+            <a @click="handleEdit(record)">编辑</a>
             <a-divider type="vertical"/>
-            <a @click="handleDetail(record)">恢复密码</a>
+            <a @click="handleReset(record)">恢复密码</a>
             <a-divider type="vertical"/>
-            <a @click="handleDetail(record)">删除</a>
+            <a @click="handleDel(record)">删除</a>
           </template>
         </span>
       </s-table>
+      <create-form
+        ref="modal"
+        :tree-data="treeData"
+        @saveSuccess="$refs.table.refresh()"
+        @ok="handleOk"
+      />
     </a-card>
   </page-header-wrapper>
-</template>a
+</template>
 
 <script>
   import { SearchForm, STable } from '@/components'
-  import { ENABLE_STATUS } from '@/utils/dict'
+  import createForm from './component/CreateForm'
   import ButtonExport from '@/components/ButtonExport/ButtonExport'
-  import { adminList } from '@/api/adminService'
+  import { adminDelete, adminDisable, adminEnable, adminList, adminResetPass } from '@/api/adminService'
+  import { sysMenus } from '@/api/system'
+  import { arrayToTree } from '@/utils/util'
 
   const columns = [
     {
@@ -76,6 +83,10 @@
       width: '600px',
       scopedSlots: { customRender: 'tags' }
     },{
+      title: '账号状态',
+      dataIndex: 'status',
+      scopedSlots: { customRender: 'disable' }
+    },{
       title: '操作',
       dataIndex: 'action',
       width: '200px',
@@ -88,7 +99,8 @@
     components: {
       STable,
       ButtonExport,
-      SearchForm
+      SearchForm,
+      createForm
     },
     data() {
       return {
@@ -103,10 +115,10 @@
           label: '联系方式',
         }],
         visible: false,
-        popVisible: false,
         confirmLoading: false,
         mdl: null,
         columns,
+        treeData: [],
         queryParam: {},
         loadData: parameter => {
           const requestParameters = Object.assign({}, parameter, this.queryParam)
@@ -117,17 +129,76 @@
         },
       }
     },
+    created() {
+      this.getSysAllPermission()
+    },
     methods: {
+      async getSysAllPermission() {
+        const { data } = await sysMenus()
+        this.treeData = arrayToTree(data)
+      },
       onSearch(params){
         this.queryParam = params;
         this.$refs.table.refresh(true)
       },
-      handleDetail({ id }) {
-        this.$router.push({
-          name: 'income', query: {
-            id
+      handleEdit({id}) {
+        this.$refs.modal.edit(id)
+      },
+      handleOk() {
+        // 新增/修改 成功时，重载列表
+        this.$refs.table.refresh()
+      },
+      handleDel({id}){
+        this.$confirm({
+          content: `是否确认删除此管理员？`,
+          onOk: async () => {
+            const result = await adminDelete([id])
+            if (result.success) {
+              this.$message.info(`删除成功`)
+              await this.$refs.table.refresh()
+            } else {
+              this.$message.error(result.msg)
+            }
           }
         })
+      },
+      handleReset({id}){
+        this.$confirm({
+          content: `是否恢复此管理员默认密码:qwer1234`,
+          onOk: async () => {
+            const result = await adminResetPass(id)
+            if (result.success) {
+              this.$message.info(`操作成功`)
+              await this.$refs.table.refresh()
+            } else {
+              this.$message.error(result.msg)
+            }
+          }
+        })
+      },
+      async onDisableChange(record) {
+        if (record.status === 1) {
+          this.$confirm({
+            content: `禁用后用户不可登陆系统,确定禁用吗？`,
+            onOk: async () => {
+              const result = await adminDisable(record.id)
+              if (result.success) {
+                this.$message.info(`禁用成功`)
+                await this.$refs.table.refresh()
+              } else {
+                this.$message.error(result.msg)
+              }
+            }
+          })
+        } else {
+          const result = await adminEnable(record.id)
+          if (result.success) {
+            this.$message.info(`启用成功`)
+            await this.$refs.table.refresh()
+          } else {
+            this.$message.error(result.msg)
+          }
+        }
       },
     }
   }

@@ -24,10 +24,10 @@
               </a-form-item>
             </a-col>
             <a-col :md="24" :sm="24" style="text-align: right">
-              <a-button type="primary" @click="$refs.table.refresh(true)" v-allow="12">查询</a-button>
+              <a-button type="primary" @click="$refs.table.refresh(true)" >查询</a-button>
               <button-export
                 style="margin-left: 8px"
-                v-allow="13"
+
                 :ids="selectedIds"
                 type="part"
                 bill-type="blog"
@@ -35,11 +35,11 @@
               >导出</button-export>
               <button-export
                 style="margin-left: 8px"
-                v-allow="14"
+
                 url="/admin/user/tz/export"
                 bill-type="blog"
               >全部导出</button-export>
-              <a-button style="margin-left: 8px" type="primary" v-allow="15" @click="handleAdd">创建用户</a-button>
+              <a-button style="margin-left: 8px" type="primary"  @click="handleAdd">创建用户</a-button>
               <a-button style="margin-left: 8px" @click="() => {this.queryParam = {};this.ctime = '';this.$refs.table.refresh(true)}">重置</a-button>
             </a-col>
           </a-row>
@@ -59,12 +59,12 @@
         <span slot="serial" slot-scope="text, record, index">
           {{ index + 1 }}
         </span>
-        <span slot="disable" slot-scope="text, record, index" v-allow="17">
+        <span slot="disable" slot-scope="text, record, index" >
           <a-switch :checked="String(text) === '1'" checked-children="启用中" un-checked-children="禁用中"
                     @change="onDisableChange(record)"/>
         </span>
 
-        <span slot="action" slot-scope="text, record" v-allow="18">
+        <span slot="action" slot-scope="text, record" >
           <template>
             <a @click="handleDetail(record)">查看详情</a>
             <a-divider type="vertical" />
