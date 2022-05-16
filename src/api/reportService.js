@@ -30,3 +30,11 @@ export function reportDoctor (params={}) {
     data: params
   })
 }
+
+export function reportGain (params={}) {
+  return request({
+    url: '/admin/report/yszl',
+    method: 'post',
+    data: params
+  })
+}
