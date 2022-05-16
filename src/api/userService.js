@@ -1,12 +1,5 @@
 import request from '@/utils/request'
 
-export function getBloggerList (parameter) {
-  return request({
-    url: '/admin/user/tz',
-    method: 'post',
-    data: parameter
-  })
-}
 
 /**
 * @Description: 普通用户

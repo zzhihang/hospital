@@ -18,6 +18,7 @@
         rowKey="key"
         :columns="columns"
         :data="loadData"
+        :scroll="{x: 2500}"
         :rowSelection="rowSelection"
         showPagination="auto"
       >
@@ -33,7 +34,7 @@
       </s-table>
     </a-card>
   </page-header-wrapper>
-</template>a
+</template>
 
 <script>
   import { STable } from '../../../components'
@@ -46,7 +47,8 @@
   const columns = [
     {
       title: '序号',
-      scopedSlots: { customRender: 'serial' }
+      scopedSlots: { customRender: 'serial' },
+      width: '100px'
     },
     {
       title: '订单编号',
@@ -79,7 +81,8 @@
     {
       title: '操作',
       dataIndex: 'action',
-      width: '200px',
+      fixed: 'right',
+      width: '100px',
       scopedSlots: { customRender: 'action' }
     }
   ]

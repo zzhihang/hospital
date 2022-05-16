@@ -22,6 +22,7 @@
         ref="table"
         size="default"
         rowKey="key"
+        :scroll="{x: 2500}"
         :columns="columns"
         :data="loadData"
         :rowSelection="rowSelection"
@@ -63,37 +64,47 @@
   const columns = [
     {
       title: '序号',
-      scopedSlots: { customRender: 'serial' }
+      scopedSlots: { customRender: 'serial' },
+      width: '100px'
     },
     {
       title: '就诊人姓名',
-      dataIndex: 'name'
+      dataIndex: 'name',
+      width: '200px'
     },{
       title: '就诊端用户手机号',
-      dataIndex: 'phone'
+      dataIndex: 'phone',
+      width: '200px'
     },{
       title: '就诊人联系方式',
-      dataIndex: 'userPhone'
+      dataIndex: 'userPhone',
+      width: '200px'
     },{
       title: '就诊人性别',
-      dataIndex: 'sex'
+      dataIndex: 'sex',
+      width: '150px'
     },{
       title: '身份证号',
-      dataIndex: 'idNumber'
+      dataIndex: 'idNumber',
+      width: '200px'
     },{
       title: '出生日期',
-      dataIndex: 'name'
+      dataIndex: 'birthday',
+      width: '150px'
     },{
       title: '所在地区',
-      dataIndex: 'province'
+      dataIndex: 'province',
+      width: '200px'
     },{
       title: '就诊人关系',
-      dataIndex: 'relationship'
+      dataIndex: 'relationship',
+      width: '100px'
     },
     {
       title: '操作',
       dataIndex: 'action',
-      width: '200px',
+      fixed: 'right',
+      width: '100px',
       scopedSlots: { customRender: 'action' }
     }
   ]
@@ -113,15 +124,15 @@
           label: '就诊人姓名'
         },{
           field: 'sex',
-          label: '就诊人性别'
+          label: '就诊人性别',
+          type: 'select',
+          options: SEX_TYPE
         },{
           field: 'province',
           label: '所在地区'
         },{
           field: 'phone',
           label: '就诊人联系方式',
-          type: 'select',
-          options: SEX_TYPE
         }],
         ENABLE_STATUS: [{text: '全部', value: ''}].concat(ENABLE_STATUS),
         visible: false,

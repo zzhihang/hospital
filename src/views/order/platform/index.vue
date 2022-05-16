@@ -17,6 +17,7 @@
         size="default"
         rowKey="key"
         :columns="columns"
+        :scroll="{x: 2500}"
         :data="loadData"
         :rowSelection="rowSelection"
         showPagination="auto"
@@ -46,7 +47,8 @@
   const columns = [
     {
       title: '序号',
-      scopedSlots: { customRender: 'serial' }
+      scopedSlots: { customRender: 'serial' },
+      width: '100px'
     },
     {
       title: '结算时间',
@@ -67,6 +69,7 @@
       title: '操作',
       dataIndex: 'action',
       width: '200px',
+      fixed: 'right',
       scopedSlots: { customRender: 'action' }
     }
   ]

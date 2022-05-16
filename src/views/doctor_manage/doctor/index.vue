@@ -125,16 +125,16 @@
           field: 'name',
           label: '医生姓名'
         },{
-          field: 'addr',
+          field: 'phone',
           label: '医生手机号'
         },{
-          field: 'addr',
+          field: 'hospitalName',
           label: '医院'
         },{
-          field: 'addr',
+          field: 'deptName',
           label: '科室'
         },{
-          field: 'addr',
+          field: 'diseaseName',
           label: '疾病标签'
         }],
         ENABLE_STATUS: [{text: '全部', value: ''}].concat(ENABLE_STATUS),

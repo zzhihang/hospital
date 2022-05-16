@@ -22,6 +22,12 @@ export const asyncRouterMap = [
         component: () => import('@/views/dashboard/Analysis'),
         meta: { title: '首页', keepAlive: true, icon: bxAnaalyse },
       },
+      {
+        path: '/workplace',
+        name: 'workplace',
+        component: () => import('@/views/dashboard/Analysis'),
+        meta: { title: '首页2', keepAlive: true, icon: bxAnaalyse },
+      },
 
       {
         path: '/doctor_manage',

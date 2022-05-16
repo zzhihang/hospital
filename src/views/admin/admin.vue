@@ -12,6 +12,7 @@
         ref="table"
         size="default"
         rowKey="key"
+        :scroll="{x: 1500}"
         :columns="columns"
         :data="loadData"
         showPagination="auto"
@@ -22,7 +23,7 @@
 
           <div slot="tags" slot-scope="text, record, index" style="text-align: left">
             <a-tag
-              v-for="(tag, i) in text.split(',')"
+              v-for="(tag, i) in text && text.split(',')"
               :key="i"
               style="margin-bottom: 10px;"
               :color="['pink', 'red', 'orange', 'green', 'cyan', 'blue', 'purple'][i % 7]"
@@ -65,11 +66,12 @@
   const columns = [
     {
       title: '序号',
-      scopedSlots: { customRender: 'serial' }
+      scopedSlots: { customRender: 'serial' },
+      width: '100px'
     },
     {
       title: '账号',
-      dataIndex: 'uid'
+      dataIndex: 'uid',
     },{
       title: '姓名',
       dataIndex: 'name'
@@ -85,10 +87,12 @@
     },{
       title: '账号状态',
       dataIndex: 'status',
+      fixed: 'right',
       scopedSlots: { customRender: 'disable' }
     },{
       title: '操作',
       dataIndex: 'action',
+      fixed: 'right',
       width: '200px',
       scopedSlots: { customRender: 'action' }
     }
