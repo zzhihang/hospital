@@ -27,9 +27,9 @@
         </span>
 
         <span slot="action" slot-scope="text, record">
-          <template>
-            <a @click="handleDetail(record)">查看</a>
-          </template>
+          <a @click="handleDetail(record)">查看</a>
+          <a-divider v-if="record.orderStatus === 'JXZ'" type="vertical" />
+          <a v-if="record.orderStatus === 'JXZ'" @click="handleRefund(record)">退款</a>
         </span>
       </s-table>
     </a-card>
@@ -41,8 +41,9 @@
   import { ENABLE_STATUS } from '../../../utils/dict'
   import SearchForm from '../../../components/SearchForm/SearchForm'
   import ButtonExport from '@/components/ButtonExport/ButtonExport'
-  import { orderList } from '@/api/orderService'
+  import { orderList, orderRefund } from '@/api/orderService'
   import { ORDER_STATUS } from '@/utils/dict'
+  import { getTextByValue } from '@/utils/dictUtils'
 
   const columns = [
     {
@@ -73,7 +74,8 @@
       dataIndex: 'price'
     },{
       title: '订单状态',
-      dataIndex: 'orderStatus'
+      dataIndex: 'orderStatus',
+      customRender: (text) => getTextByValue(text, 'ORDER_STATUS')
     },{
       title: '操作时间',
       dataIndex: 'utime'
@@ -82,7 +84,7 @@
       title: '操作',
       dataIndex: 'action',
       fixed: 'right',
-      width: '100px',
+      width: '150px',
       scopedSlots: { customRender: 'action' }
     }
   ]
@@ -106,7 +108,7 @@
           field: 'doctorPhone',
           label: '医生手机号'
         },{
-          field: 'phone',
+          field: 'orderStatus',
           label: '订单状态',
           type: 'select',
           options: ORDER_STATUS
@@ -148,6 +150,20 @@
         this.$router.push({
           name: 'OrderDetail', query: {
             id
+          }
+        })
+      },
+      handleRefund({id, orderStatus}){
+        this.$confirm({
+          content: `订单状态为${getTextByValue(orderStatus, 'ORDER_STATUS')}，确认是否退款？`,
+          onOk: async () => {
+            const result = await orderRefund(id)
+            if (result.success) {
+              this.$message.info(`操作成功`)
+              await this.$refs.table.refresh()
+            } else {
+              this.$message.error(result.msg)
+            }
           }
         })
       },

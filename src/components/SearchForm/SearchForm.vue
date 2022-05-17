@@ -40,7 +40,6 @@
 </template>
 
 <script>
-  import Vue from 'vue'
 
   export default {
     name: 'SearchForm',
@@ -76,7 +75,11 @@
         handler() {
           const queryParams = {}
           this.list.forEach(item => {
-            queryParams[item.field] = ''
+            if(item.type === 'dateRange'){
+              queryParams[item.field] = [];
+            }else{
+              queryParams[item.field] = ''
+            }
           })
           this.queryParams = queryParams
         },

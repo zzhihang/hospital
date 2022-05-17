@@ -10,7 +10,15 @@ export function orderList (parameter) {
 
 export function orderInfo (id) {
   return request({
-    url: 'admin/order/info',
+    url: '/admin/order/info',
+    method: 'post',
+    data: {id}
+  })
+}
+
+export function orderRefund (id) {
+  return request({
+    url: '/admin/order/refund',
     method: 'post',
     data: {id}
   })

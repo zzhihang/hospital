@@ -22,18 +22,18 @@ const isProd = process.env.NODE_ENV === 'production'
 const assetsCDN = {
   // webpack build externals
   externals: {
-    vue: 'Vue',
-    'vue-router': 'VueRouter',
-    vuex: 'Vuex',
-    axios: 'axios'
+    // vue: 'Vue',
+    // 'vue-router': 'VueRouter',
+    // vuex: 'Vuex',
+    // axios: 'axios'
   },
   css: [],
   // https://unpkg.com/browse/vue@2.6.10/
   js: [
-    '//cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js',
-    '//cdn.jsdelivr.net/npm/vue-router@3.5.1/dist/vue-router.min.js',
-    '//cdn.jsdelivr.net/npm/vuex@3.1.1/dist/vuex.min.js',
-    '//cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js'
+    // '//cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.min.js',
+    // '//cdn.bootcdn.net/ajax/libs/vue-router/3.5.1/vue-router.min.js',
+    // '//cdn.bootcdn.net/ajax/libs/vuex/3.1.1/vuex.min.js',
+    // '//cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js'
   ]
 }
 
@@ -51,7 +51,63 @@ const vueConfig = {
       })
     ],
     // if prod, add externals
-    externals: isProd ? assetsCDN.externals : {}
+    //externals: isProd ? assetsCDN.externals : {},
+    optimization: isProd ? {
+      splitChunks: {
+        cacheGroups: {
+          common: {
+            name: "chunk-common",
+            chunks: "initial",
+            minChunks: 2,
+            maxInitialRequests: 5,
+            minSize: 0,
+            priority: 1,
+            reuseExistingChunk: true,
+            enforce: true
+          },
+          vendors: {
+            name: "chunk-vendors",
+            test: /[\\/]node_modules[\\/]/,
+            chunks: "initial",
+            priority: 2,
+            reuseExistingChunk: true,
+            enforce: true
+          },
+          vuex: {
+            name: "chunk-vant",
+            test: /[\\/]node_modules[\\/]vuex[\\/]/,
+            chunks: "all",
+            priority: 3,
+            reuseExistingChunk: true,
+            enforce: true
+          },
+          vue: {
+            name: "chunk-vue",
+            test: /[\\/]node_modules[\\/]vue[\\/]/,
+            chunks: "all",
+            priority: 4,
+            reuseExistingChunk: true,
+            enforce: true
+          },
+          axios: {
+            name: "chunk-axios",
+            test: /[\\/]node_modules[\\/]axios[\\/]/,
+            chunks: "all",
+            priority: 4,
+            reuseExistingChunk: true,
+            enforce: true
+          },
+          routers: {
+            name: "chunk-router",
+            test: /[\\/]node_modules[\\/]vue-router[\\/]/,
+            chunks: "all",
+            priority: 4,
+            reuseExistingChunk: true,
+            enforce: true
+          },
+        }
+      }
+    } : {}
   },
 
   chainWebpack: config => {

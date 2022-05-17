@@ -13,12 +13,12 @@ export const DYNAMIC_TYPE = [{ text: '文本', value: 'text' }, { text: '图片'
   value: 'doc'
 }, { text: '语音', value: 'voice' }]
 export const ORDER_TYPE = [{ text: '付费订阅', value: 'zhuanti' }]
-export const ORDER_STATUS = [{ text: '进行中', value: '进行中' }, { text: '待支付', value: '待支付' }, {
+export const ORDER_STATUS = [{ text: '进行中', value: 'JXZ' }, { text: '待支付', value: 'DZF' }, {
   text: '已完成',
-  value: '已完成'
-}, { text: '已取消', value: '已取消' }, { text: '已退款', value: '已退款' }, { text: '待接收', value: '待接收' }, {
+  value: 'YWC'
+}, { text: '已取消', value: 'YQX' }, { text: '已退款', value: 'YTK' }, { text: '待接收', value: 'DJS' }, {
   text: '被驳回',
-  value: '被驳回'
+  value: 'BBH'
 }]
 export const SEX_TYPE = [{ text: '男', value: '男' }, { text: '女', value: '女' }]
 
@@ -34,5 +34,6 @@ export default {
   SUBSCRIBE_STATUS,
   DYNAMIC_TYPE,
   ORDER_TYPE,
-  SEX_TYPE
+  SEX_TYPE,
+  ORDER_STATUS
 }
