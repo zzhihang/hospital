@@ -14,7 +14,14 @@
             url="/admin/user/tz/export"
             bill-type="blog"
           >导入</button-export>
-          <a-button type="primary" style="margin-left: 8px;" @click="handleDelete">删除</a-button>
+          <button-delete
+            style="margin-left: 8px"
+            url="/sysdept/delete"
+            :ids="selectedIds"
+            @deleteSuccess="onSearch"
+          >
+            删除
+          </button-delete>
         </search-form>
       </div>
 
@@ -60,6 +67,7 @@
   import ButtonExport from '@/components/ButtonExport/ButtonExport'
   import SearchForm from '@/components/SearchForm/SearchForm'
   import { departmentList, departmentSave } from '@/api/doctorService'
+  import ButtonDelete from '@/components/ButtonDelete/ButtonDelete'
 
   const columns = [
     {
@@ -84,6 +92,7 @@
       STable,
       CreateForm,
       ButtonExport,
+      ButtonDelete,
       SearchForm
     },
     data() {

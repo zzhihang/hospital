@@ -162,6 +162,8 @@
         this.$confirm({
           content: `审核任务`,
           cancelText: '通过',
+          closable: true,
+          maskClosable: true,
           okText: '驳回',
           onOk: async () => {
             const result = await serviceAudit({
@@ -175,7 +177,10 @@
               this.$message.error(result.msg)
             }
           },
-          onCancel: async () => {
+          onCancel: async (e) => {
+            if(e.triggerCancel){ //点击关闭和遮罩层时也会触发这个
+              return true;
+            }
             const result = await serviceAudit({
               auditType: '通过',
               ids: this.selectedIds

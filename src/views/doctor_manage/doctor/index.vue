@@ -12,8 +12,15 @@
           <button-export
             style="margin-left: 8px"
             url="/admin/user/tz/export"
-            bill-type="blog"
           >导入</button-export>
+          <button-delete
+            style="margin-left: 8px"
+            url="/doctor/delete"
+            :ids="selectedIds"
+            @deleteSuccess="onSearch"
+          >
+            删除
+          </button-delete>
         </search-form>
       </div>
 
@@ -68,6 +75,7 @@
     doctorSave,
     hospitalDelete
   } from '@/api/doctorService'
+  import ButtonDelete from '@/components/ButtonDelete/ButtonDelete'
 
   const columns = [
     {
@@ -117,7 +125,8 @@
       STable,
       CreateForm,
       ButtonExport,
-      SearchForm
+      SearchForm,
+      ButtonDelete
     },
     data() {
       return {
@@ -173,6 +182,8 @@
     },
     methods: {
       onSearch(params){
+        this.selectedRows = [];
+        this.selectedRowKeys = [];
         this.queryParam = params;
         this.$refs.table.refresh(true)
       },

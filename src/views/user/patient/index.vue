@@ -13,7 +13,14 @@
             url="/admin/user/tz/export"
             bill-type="blog"
           >导入</button-export>
-          <a-button type="primary" style="margin-left: 8px;" @click="handleDelete">删除</a-button>
+          <button-delete
+            style="margin-left: 8px"
+            url="/userpatient/delete"
+            :ids="selectedIds"
+            @deleteSuccess="onSearch"
+          >
+            删除
+          </button-delete>
         </search-form>
       </div>
 
@@ -60,6 +67,7 @@
   import SearchForm from '../../../components/SearchForm/SearchForm'
   import { patientList, patientSave } from '@/api/customerService'
   import { SEX_TYPE } from '@/utils/dict'
+  import ButtonDelete from '@/components/ButtonDelete/ButtonDelete'
 
   const columns = [
     {
@@ -115,6 +123,7 @@
       STable,
       CreateForm,
       ButtonExport,
+      ButtonDelete,
       SearchForm
     },
     data() {

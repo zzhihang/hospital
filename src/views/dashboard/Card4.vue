@@ -3,7 +3,7 @@
           title="就诊人总量/就诊端用户总量动态"
           :style="{ height: '100%' }">
     <div slot="extra" style="height: inherit;">
-      <a-range-picker :style="{width: '256px'}"/>
+      <a-range-picker :style="{width: '256px'}" v-model="date"/>
     </div>
     <div>
       <v-chart :forceFit="true" :height="height" :data="data" :scale="scale">
@@ -40,7 +40,8 @@
       return {
         data,
         scale,
-        loading: false,
+        date: '',
+        loading: true,
         height: 400
       }
     },
@@ -48,9 +49,18 @@
       this.getData()
     },
     methods: {
-      async getData() {
-        const { data } = await reportGain()
-
+      async getData(params) {
+        const { data } = await reportGain(params)
+        this.loading = false;
+      }
+    },
+    watch: {
+      date(val){
+        if(val.length){
+          this.getData({startDate: val[0].format('yyyy-MM-DD'), endDate: val[1].format('yyyy-MM-DD')});
+        }else {
+          this.getData({});
+        }
       }
     }
   }

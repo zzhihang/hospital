@@ -8,7 +8,6 @@
             :ids="selectedIds"
             url="/sysdept/export"
           >导出</button-export>
-          <a-button type="primary" style="margin-left: 8px;" @click="handleDelete">删除</a-button>
         </search-form>
       </div>
 

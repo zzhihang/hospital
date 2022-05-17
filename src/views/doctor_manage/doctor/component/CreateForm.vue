@@ -16,7 +16,7 @@
           <a-input placeholder="请输入医生姓名" v-decorator="['name', {rules: [{required: true, message: '请输入'}]}]" />
         </a-form-item>
         <a-form-item label="医生手机号">
-          <a-input placeholder="请输入医院手机号" v-decorator="['phone', {rules: [{required: true, message: '请输入'}]}]" />
+          <a-input placeholder="请输入医生手机号" v-decorator="['phone', {rules: [{required: true, message: '请输入'}]}]" />
         </a-form-item>
         <a-form-item label="医院">
           <a-select v-decorator="['hospitalId', {rules: [{required: true, message: '请输入'}]}]"
@@ -51,7 +51,7 @@
                     placeholder="请选择疾病类型"
           >
             <a-select-option
-              v-for="(item, index) in departmentList"
+              v-for="(item, index) in diseaseList"
               :key="index"
               :value="item.id">
               {{item.name}}

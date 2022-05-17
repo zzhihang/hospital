@@ -2,7 +2,7 @@
   <a-card class="antd-pro-pages-dashboard-analysis-salesCard" :loading="loading" :bordered="false" title="就诊人总量/就诊端用户总量动态"
           :style="{ height: '100%' }">
     <div slot="extra" style="height: inherit;">
-      <a-range-picker :style="{width: '256px'}"/>
+      <a-range-picker :style="{width: '256px'}" v-model="date"/>
     </div>
     <div>
       <div>
@@ -34,6 +34,7 @@
         }],
         loading: true,
         height: 400,
+        date: '',
         style: { stroke: '#fff', lineWidth: 1 }
       }
     },
@@ -41,8 +42,8 @@
       this.getData();
     },
     methods: {
-      async getData() {
-        const {data} = await reportUser();
+      async getData(params) {
+        const {data} = await reportUser(params);
         const dv = new DataSet.View().source(data)
         //https://github.com/viserjs/viser/issues/136
         dv.transform({
@@ -59,7 +60,16 @@
           value: 'num',
         })
         this.data = dv.rows
-        this.loading = !this.loading;
+        this.loading = false;
+      }
+    },
+    watch: {
+      date(val){
+        if(val.length){
+          this.getData({startDate: val[0].format('yyyy-MM-DD'), endDate: val[1].format('yyyy-MM-DD')});
+        }else {
+          this.getData({});
+        }
       }
     }
   }
