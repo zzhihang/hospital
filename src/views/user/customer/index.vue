@@ -6,7 +6,7 @@
           <button-export
             style="margin-left: 8px"
             :ids="selectedIds"
-            url="/sysdept/export"
+            url="/userinfo/export"
           >导出</button-export>
         </search-form>
       </div>
@@ -57,7 +57,7 @@
     },
     {
       title: '头像',
-      dataIndex: 'name',
+      dataIndex: 'headimgurl',
       scopedSlots: { customRender: 'headimgurl' }
     },
     {
@@ -109,6 +109,10 @@
       }
     },
     methods: {
+      onSearch(params){
+        this.queryParam = params;
+        this.$refs.table.refresh(true)
+      },
       async onDisableChange(record) {
         if (record.status === 1) {
           this.$confirm({

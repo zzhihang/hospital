@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="创建用户"
+    title="医院信息"
     :width="640"
     :visible="visible"
     :confirmLoading="loading"
@@ -9,8 +9,10 @@
   >
     <a-spin :spinning="loading">
       <a-form :form="form" v-bind="formLayout">
-        <a-form-item label="医院名称">
+        <a-form-item>
           <a-input style="display: none" v-decorator="['id']" />
+        </a-form-item>
+        <a-form-item label="医院名称">
           <a-input placeholder="请输入医院名称" v-decorator="['name', {rules: [{required: true, message: '请输入'}]}]" />
         </a-form-item>
         <a-form-item label="医院地址">

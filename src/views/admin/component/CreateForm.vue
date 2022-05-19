@@ -18,7 +18,7 @@
         <a-input placeholder="请输入账号" v-decorator="['uid', {rules: [{required: true, message: '请输入'}]}]" />
       </a-form-item>
       <a-form-item label="联系方式">
-        <a-input placeholder="请输入联系方式" v-decorator="['phone', {rules: [{required: true, message: '请输入'}]}]" />
+        <a-input placeholder="请输入联系方式" v-decorator="['phone', {rules: [{required: true, message: '请输入'}, MOBILE_VALIDATE]}]" />
       </a-form-item>
       <div class="my-card">
         <a-card title="权限分配：" style="width: 450px" :headStyle="{fontWeight: 'bold'}">
@@ -41,6 +41,7 @@
   import Vue from 'vue'
   import { Tree } from 'ant-design-vue'
   import { adminInfo, adminSave } from '@/api/adminService'
+  import { MOBILE_VALIDATE } from '@/utils/validator'
 
   Vue.use(Tree)
   export default {
@@ -67,6 +68,7 @@
         checkedKeys: [],
         form: this.$form.createForm(this),
         userInfo: {},
+        MOBILE_VALIDATE: MOBILE_VALIDATE
       }
     },
     methods: {

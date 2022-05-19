@@ -7,7 +7,7 @@
           <button-export
             style="margin-left: 8px"
             :ids="selectedIds"
-            url="/sysdoctor/export"
+            url="/doctor/export"
           >导出</button-export>
           <button-export
             style="margin-left: 8px"
@@ -200,6 +200,11 @@
         this.confirmLoading = true
         form.validateFields(async (errors, values) => {
           if (!errors) {
+            if(values.diseaseLabel.length > 3){
+              this.confirmLoading = false
+              return this.$message.warning('最多选择三个疾病标签，请调整');
+            }
+            values.diseaseLabel = values.diseaseLabel.join(',');
             const result = await doctorSave(values)
             if(result.success){
               form.resetFields()
@@ -244,7 +249,7 @@
       async onDisableChange(record) {
         if (record.status === 1) {
           this.$confirm({
-            content: `禁用后用户不可在手机端正常登陆，确认是否禁用`,
+            content: `禁用后用户不可在手机端正常登录，确认是否禁用`,
             onOk: async () => {
               const result = await doctorDisable(record.id)
               if (result.success) {

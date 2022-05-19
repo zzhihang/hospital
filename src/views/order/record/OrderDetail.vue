@@ -4,7 +4,7 @@
       <a-descriptions title="基本信息">
         <a-descriptions-item label="操作时间">{{data.utime}}</a-descriptions-item>
         <a-descriptions-item label="订单编号">{{data.orderNo}}</a-descriptions-item>
-        <a-descriptions-item label="订单状态">{{data.orderStatus}}</a-descriptions-item>
+        <a-descriptions-item label="订单状态">{{data.orderStatus | useDictORDER_STATUS}}</a-descriptions-item>
         <a-descriptions-item label="就诊人姓名">{{data.patientName}}</a-descriptions-item>
         <a-descriptions-item label="就诊人联系方式">{{data.patientPhone}}</a-descriptions-item>
         <a-descriptions-item label="就诊时间">{{data.businessTime}}</a-descriptions-item>
@@ -31,10 +31,10 @@
       }
     },
     created() {
-      this.getUserInfo()
+      this.getInfo()
     },
     methods: {
-      async getUserInfo() {
+      async getInfo() {
         const { data } = await orderInfo(this.$route.query.id)
         this.data = data;
       },

@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="修改推荐医生"
+    title="推荐医生"
     :width="640"
     :visible="visible"
     :confirmLoading="loading"
@@ -9,9 +9,6 @@
   >
     <a-spin :spinning="loading">
       <a-form :form="form" v-bind="formLayout">
-        <a-form-item>
-          <a-input style="display: none" v-decorator="['id']"/>
-        </a-form-item>
         <a-form-item label="医生姓名">
           <a-select v-decorator="['doctorId', {rules: [{required: true, message: '请输入'}]}]"
                     @change="onDiseaseChange"
@@ -43,7 +40,7 @@
   import pick from 'lodash.pick'
   import { dicDoctor } from '@/api/dictService'
   // 表单字段
-  const fields = ['id', 'name', 'phone', 'hospitalName', 'deptName', 'doctorId', 'title']
+  const fields = ['name', 'phone', 'hospitalName', 'deptName', 'doctorId', 'title']
 
   export default {
     props: {

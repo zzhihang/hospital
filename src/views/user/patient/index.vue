@@ -6,11 +6,11 @@
           <button-export
             style="margin-left: 8px"
             :ids="selectedIds"
-            url="/sysdept/export"
+            url="/userpatient/export"
           >导出</button-export>
           <button-export
             style="margin-left: 8px"
-            url="/admin/user/tz/export"
+            url="/userpatient/export"
             bill-type="blog"
           >导入</button-export>
           <button-delete
@@ -81,11 +81,11 @@
       width: '200px'
     },{
       title: '就诊端用户手机号',
-      dataIndex: 'phone',
+      dataIndex: 'userPhone',
       width: '200px'
     },{
       title: '就诊人联系方式',
-      dataIndex: 'userPhone',
+      dataIndex: 'phone',
       width: '200px'
     },{
       title: '就诊人性别',
@@ -201,7 +201,7 @@
               this.confirmLoading = false
               form.resetFields()
               this.$refs.table.refresh()
-              this.$message.info('新增成功')
+              this.$message.info('操作成功')
             }else{
               this.$message.error(result.msg);
             }

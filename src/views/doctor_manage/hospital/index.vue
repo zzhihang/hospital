@@ -46,8 +46,6 @@
         <span slot="action" slot-scope="text, record">
           <template>
             <a @click="handleEdit(record)">编辑</a>
-            <a-divider type="vertical"/>
-            <a @click="handleDel(record)">删除</a>
           </template>
         </span>
       </s-table>
@@ -163,7 +161,6 @@
         this.confirmLoading = true
         form.validateFields(async (errors, values) => {
           if (!errors) {
-            debugger
             const result = await hospitalSave(values)
             if(result.success){
               // 重置表单数据

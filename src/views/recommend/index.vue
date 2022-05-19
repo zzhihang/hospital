@@ -1,6 +1,9 @@
 <template>
   <page-header-wrapper>
     <a-card :bordered="false">
+      <div class="table-page-search-wrapper">
+        <a-button type="primary" @click="handleAdd">新增推荐医生</a-button>
+      </div>
       <a-table
         style="margin-top: 10px;"
         ref="table"
@@ -92,6 +95,9 @@
         })
       },
       handleAdd() {
+        if(this.tableData.length === 10){
+          return this.$message.warning('最多只能推荐10个医生')
+        }
         this.mdl = null
         this.visible = true
       },
@@ -104,7 +110,9 @@
         this.confirmLoading = true
         form.validateFields(async (errors, values) => {
           if (!errors) {
-            values.id = this.mdl.id;
+            if(this.mdl){
+              values.id = this.mdl.id;
+            }
             const result = await recommendSave(values)
             if(result.success){
               form.resetFields()

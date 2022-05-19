@@ -1,5 +1,5 @@
 <template>
-  <a-card class="antd-pro-pages-dashboard-analysis-salesCard" :loading="loading" :bordered="false" title="就诊人总量/就诊端用户总量动态"
+  <a-card class="antd-pro-pages-dashboard-analysis-salesCard" :loading="loading" :bordered="false" title="订单总量动态"
           :style="{ height: '100%' }">
     <div slot="extra" style="height: inherit;">
       <a-range-picker :style="{width: '256px'}" v-model="date"/>

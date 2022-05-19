@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="创建用户"
+    title="疾病信息"
     :width="640"
     :visible="visible"
     :confirmLoading="loading"
@@ -16,7 +16,7 @@
           <a-input placeholder="请输入疾病类型" v-decorator="['name', {rules: [{required: true, message: '请输入'}]}]" />
         </a-form-item>
         <a-form-item label="疾病标签">
-          <a-input placeholder="请输入疾病标签" v-decorator="['diseaseLabel', {rules: [{required: true, message: '请输入'}]}]" />
+          <a-input placeholder="请输入疾病标签，多个标签请用,分隔" v-decorator="['diseaseLabel', {rules: [{required: true, message: '请输入'}]}]" />
         </a-form-item>
       </a-form>
     </a-spin>

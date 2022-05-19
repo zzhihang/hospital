@@ -6,7 +6,7 @@
           <button-export
             style="margin-left: 8px"
             :ids="selectedIds"
-            url="/sysdept/export"
+            url="/admin/order/transaction/doctorRank/export"
           >导出</button-export>
         </search-form>
       </div>
@@ -40,8 +40,7 @@
   import { ENABLE_STATUS } from '../../../utils/dict'
   import SearchForm from '../../../components/SearchForm/SearchForm'
   import ButtonExport from '@/components/ButtonExport/ButtonExport'
-  import { orderList } from '@/api/orderService'
-  import { ORDER_STATUS } from '@/utils/dict'
+  import { orderDoctorRank } from '@/api/orderService'
 
   const columns = [
     {
@@ -55,10 +54,10 @@
       dataIndex: 'doctorPhone'
     },{
       title: '累计已完成订单',
-      dataIndex: 'price'
+      dataIndex: 'orderCount'
     },{
       title: '累计收益',
-      dataIndex: 'orderStatus'
+      dataIndex: 'doctorFee'
     }, {
       title: '操作',
       dataIndex: 'action',
@@ -77,7 +76,7 @@
     data() {
       return {
         searchList: [{
-          field: 'orderNo',
+          field: 'doctorName',
           label: '医生姓名'
         },{
           field: 'doctorPhone',
@@ -98,7 +97,7 @@
         queryParam: {},
         loadData: parameter => {
           const requestParameters = Object.assign({}, parameter, this.queryParam)
-          return orderList(requestParameters)
+          return orderDoctorRank(requestParameters)
             .then(res => {
               return res.data
             })
@@ -112,10 +111,10 @@
         this.queryParam = params;
         this.$refs.table.refresh(true)
       },
-      handleDetail({ id }) {
+      handleDetail({ doctorId }) {
         this.$router.push({
           name: 'income', query: {
-            id
+            shouyiDoctorId: doctorId
           }
         })
       },

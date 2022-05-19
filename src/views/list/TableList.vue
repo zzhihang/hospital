@@ -280,7 +280,7 @@ export default {
               // 刷新表格
               this.$refs.table.refresh()
 
-              this.$message.info('新增成功')
+              this.$message.info('操作成功')
             })
           }
         } else {

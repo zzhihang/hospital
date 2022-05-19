@@ -159,7 +159,7 @@
               this.confirmLoading = false
               form.resetFields()
               this.$refs.table.refresh()
-              this.$message.info('新增成功')
+              this.$message.info('操作成功')
             }else{
               this.$message.error(result.msg);
             }

@@ -8,10 +8,10 @@
       <div class="user-layout-content">
         <div class="top">
           <div class="header">
-            <a href="/">
-              <img :src="require('../../src/assets/logo.png')" class="logo" alt="logo">
+            <img :src="require('../../src/assets/logo.png')" class="logo" alt="logo">
+            <p>
               <span class="title">普林互联网医院管理端</span>
-            </a>
+            </p>
           </div>
           <!--<div class="desc">-->
             <!--{{ $t('layouts.userLayout.title') }}-->
@@ -100,9 +100,9 @@ export default {
         text-align: center;
 
         .header {
-          height: 44px;
-          line-height: 44px;
-
+          p{
+            margin-bottom: 0;
+          }
           .badge {
             position: absolute;
             display: inline-block;

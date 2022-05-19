@@ -183,7 +183,7 @@
       async onDisableChange(record) {
         if (record.status === 1) {
           this.$confirm({
-            content: `禁用后用户不可登陆系统,确定禁用吗？`,
+            content: `禁用后用户不可登录系统,确定禁用吗？`,
             onOk: async () => {
               const result = await adminDisable(record.id)
               if (result.success) {

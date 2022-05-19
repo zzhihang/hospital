@@ -6,7 +6,7 @@
           <button-export
             style="margin-left: 8px"
             :ids="selectedIds"
-            url="/sysdept/export"
+            url="/admin/order/export"
           >导出</button-export>
         </search-form>
       </div>

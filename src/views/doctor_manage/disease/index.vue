@@ -103,7 +103,10 @@
       return {
         searchList: [{
           field: 'name',
-          label: '科室名称'
+          label: '疾病类型'
+        },{
+          field: 'diseaseLabel',
+          label: '疾病标签'
         }],
         ENABLE_STATUS: [{text: '全部', value: ''}].concat(ENABLE_STATUS),
         visible: false,

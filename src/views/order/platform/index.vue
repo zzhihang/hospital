@@ -6,7 +6,7 @@
           <button-export
             style="margin-left: 8px"
             :ids="selectedIds"
-            url="/sysdept/export"
+            url="/admin/order/transaction/days/export"
           >导出</button-export>
         </search-form>
       </div>
@@ -17,7 +17,7 @@
         size="default"
         rowKey="key"
         :columns="columns"
-        :scroll="{x: 2500}"
+        :scroll="{x: 1800}"
         :data="loadData"
         :rowSelection="rowSelection"
         showPagination="auto"
@@ -41,8 +41,7 @@
   import { ENABLE_STATUS } from '../../../utils/dict'
   import SearchForm from '../../../components/SearchForm/SearchForm'
   import ButtonExport from '@/components/ButtonExport/ButtonExport'
-  import { orderList } from '@/api/orderService'
-  import { ORDER_STATUS } from '@/utils/dict'
+  import { orderPlatformDays } from '@/api/orderService'
 
   const columns = [
     {
@@ -52,19 +51,22 @@
     },
     {
       title: '结算时间',
-      dataIndex: 'orderNo'
+      dataIndex: 'dateShow',
     },{
       title: '当天累计已完成订单',
-      dataIndex: 'patientName'
+      dataIndex: 'orderCount',
+      width: '200px'
     },{
       title: '当日累计收益',
-      dataIndex: 'patientPhone'
+      dataIndex: 'affiliatingFee',
+      width: '200px'
     },{
       title: '当日累计互联网信息服务费',
-      dataIndex: 'businessTime'
+      dataIndex: 'originFee',
+      width: '200px'
     },{
       title: '当日累计人力服务公司挂靠医生服务信息费',
-      dataIndex: 'doctorName'
+      dataIndex: 'serviceFee'
     },{
       title: '操作',
       dataIndex: 'action',
@@ -109,7 +111,7 @@
         queryParam: {},
         loadData: parameter => {
           const requestParameters = Object.assign({}, parameter, this.queryParam)
-          return orderList(requestParameters)
+          return orderPlatformDays(requestParameters)
             .then(res => {
               return res.data
             })
@@ -123,10 +125,10 @@
         this.queryParam = params;
         this.$refs.table.refresh(true)
       },
-      handleDetail({ id }) {
+      handleDetail({ shouyiDate }) {
         this.$router.push({
           name: 'income', query: {
-            id
+            shouyiDate
           }
         })
       },

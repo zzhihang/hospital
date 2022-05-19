@@ -14,6 +14,8 @@
 
 <script>
   import Vue from 'vue'
+  import { orderInfo, orderList } from '@/api/orderService'
+  import { getTextByValue } from '@/utils/dictUtils'
 
   export default {
     data() {
@@ -23,34 +25,44 @@
           dataIndex: 'utime'
         }, {
           title: '订单编号',
-          dataIndex: 'price'
+          dataIndex: 'orderNo'
         }, {
           title: '就诊人姓名',
-          dataIndex: 'addr'
+          dataIndex: 'patientName'
         }, {
           title: '就诊人联系方式',
-          dataIndex: 'serviceDescr'
+          dataIndex: 'patientPhone'
         }, {
           title: '就诊时间',
-          dataIndex: 'serviceDescr'
+          dataIndex: 'businessTime'
         }, {
           title: '医生手机号',
-          dataIndex: 'serviceDescr'
+          dataIndex: 'doctorPhone'
         }, {
           title: '金额',
-          dataIndex: 'serviceDescr'
+          dataIndex: 'price'
         }, {
           title: '订单状态',
-          dataIndex: 'serviceDescr'
+          dataIndex: 'orderStatus',
+          customRender: (text) => getTextByValue(text, 'ORDER_STATUS')
         }, {
           title: '服务项目',
-          dataIndex: 'serviceDescr'
+          dataIndex: 'serviceItem'
         }],
         tableData: []
       }
     },
     created(){
-
+      if(this.$route.query.shouyiDate){
+        orderList({shouyiDate: this.$route.query.shouyiDate}).then(({data}) => {
+          this.tableData = data.records;
+        })
+      }
+      if(this.$route.query.shouyiDoctorId){
+        orderList({shouyiDoctorId: this.$route.query.shouyiDoctorId}).then(({data}) => {
+          this.tableData = data.records;
+        })
+      }
     }
   }
 </script>

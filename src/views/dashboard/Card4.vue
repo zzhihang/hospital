@@ -1,6 +1,6 @@
 <template>
   <a-card class="antd-pro-pages-dashboard-analysis-salesCard" :loading="loading" :bordered="false"
-          title="就诊人总量/就诊端用户总量动态"
+          title="每日收益统计"
           :style="{ height: '100%' }">
     <div slot="extra" style="height: inherit;">
       <a-range-picker :style="{width: '256px'}" v-model="date"/>

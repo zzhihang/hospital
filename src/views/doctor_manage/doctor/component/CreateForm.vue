@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="创建用户"
+    title="医生信息"
     :width="640"
     :visible="visible"
     :confirmLoading="loading"
@@ -16,7 +16,7 @@
           <a-input placeholder="请输入医生姓名" v-decorator="['name', {rules: [{required: true, message: '请输入'}]}]" />
         </a-form-item>
         <a-form-item label="医生手机号">
-          <a-input placeholder="请输入医生手机号" v-decorator="['phone', {rules: [{required: true, message: '请输入'}]}]" />
+          <a-input placeholder="请输入医生手机号" v-decorator="['phone', {rules: [{required: true, message: '请输入'}, MOBILE_VALIDATE]}]" />
         </a-form-item>
         <a-form-item label="医院">
           <a-select v-decorator="['hospitalId', {rules: [{required: true, message: '请输入'}]}]"
@@ -59,7 +59,20 @@
           </a-select>
         </a-form-item>
         <a-form-item label="疾病标签">
-          <span>{{diseaseLabel}}</span>
+          <a-select
+            v-decorator="['diseaseLabel', {rules: [{required: true, message: '请输入'}]}]"
+            mode="tags"
+            style="width: 100%"
+            placeholder="请选择疾病标签"
+            :maxTagCount="3"
+          >
+            <a-select-option
+              v-for="(item, index) in diseaseLabelList"
+              :key="index"
+              :value="item">
+              {{item}}
+            </a-select-option>
+          </a-select>
         </a-form-item>
         <a-form-item label="专业擅长">
           <a-textarea placeholder="请输入专业擅长" v-decorator="['major', {rules: [{required: true, message: '请输入'}]}]" />
@@ -75,8 +88,9 @@
 <script>
 import pick from 'lodash.pick'
 import { dictDepartment, dictDisease, dictHospital } from '@/api/dictService'
+import { MOBILE_VALIDATE } from '@/utils/validator'
 // 表单字段
-const fields = ['id', 'name', 'phone', 'hospitalId', 'deptId', 'title', 'diseaseId', 'major', 'introduction']
+const fields = ['id', 'name', 'phone', 'hospitalId', 'deptId', 'title', 'diseaseId', 'major', 'introduction', 'diseaseLabel']
 
 export default {
   props: {
@@ -111,7 +125,8 @@ export default {
       departmentList: [],
       hospitalList: [],
       diseaseList: [],
-      diseaseLabel: '',
+      diseaseLabelList: [],
+      MOBILE_VALIDATE: MOBILE_VALIDATE
     }
   },
   created () {
@@ -131,10 +146,10 @@ export default {
     })
   },
   methods: {
-    onDiseaseChange(e) {debugger
+    onDiseaseChange(e) {
       const finder = this.diseaseList.find(item => item.id === e);
-      this.diseaseLabel = finder.diseaseLabel
-    }
+      this.diseaseLabelList = finder.diseaseLabel
+    },
   }
 }
 </script>

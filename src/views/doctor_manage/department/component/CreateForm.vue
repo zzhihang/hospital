@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="创建用户"
+    title="科室信息"
     :width="640"
     :visible="visible"
     :confirmLoading="loading"

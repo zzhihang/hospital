@@ -33,7 +33,7 @@ export function reportDoctor (params={}) {
 
 export function reportGain (params={}) {
   return request({
-    url: '/admin/report/yszl',
+    url: '/admin/report/mrsy',
     method: 'post',
     data: params
   })

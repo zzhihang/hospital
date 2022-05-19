@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="创建用户"
+    title="就诊人信息"
     :width="640"
     :visible="visible"
     :confirmLoading="loading"
@@ -28,7 +28,7 @@
           </a-select>
         </a-form-item>
         <a-form-item label="身份证号">
-          <a-input placeholder="请输入身份证号" v-decorator="['idNumber', {rules: [{required: true, message: '请输入'}]}]" />
+          <a-input placeholder="请输入身份证号" v-decorator="['idNumber', {rules: [{required: true, message: '请输入'}, IDCARD_VALIDATE]}]" />
         </a-form-item>
         <a-form-item label="所在地区">
           <a-input placeholder="请输入所在地区" v-decorator="['province', {rules: [{required: true, message: '请输入'}]}]" />
@@ -37,7 +37,7 @@
           <a-input placeholder="请输入就诊人关系" v-decorator="['relationship', {rules: [{required: true, message: '请输入'}]}]" />
         </a-form-item>
         <a-form-item label="就诊人联系方式">
-          <a-input placeholder="请输入联系方式" v-decorator="['phone', {rules: [{required: true, message: '请输入'}]}]" />
+          <a-input placeholder="请输入联系方式" v-decorator="['phone', {rules: [{required: true, message: '请输入'}, MOBILE_VALIDATE]}]" />
         </a-form-item>
       </a-form>
     </a-spin>
@@ -47,6 +47,7 @@
 <script>
 import pick from 'lodash.pick'
 import { SEX_TYPE } from '@/utils/dict'
+import { IDCARD_VALIDATE, MOBILE_VALIDATE } from '@/utils/validator'
 // 表单字段
 const fields = ['id', 'name', 'sex', 'idNumber', 'relationship', 'phone', 'province']
 
@@ -80,7 +81,9 @@ export default {
     }
     return {
       form: this.$form.createForm(this),
-      SEX_TYPE: SEX_TYPE
+      SEX_TYPE: SEX_TYPE,
+      MOBILE_VALIDATE: MOBILE_VALIDATE,
+      IDCARD_VALIDATE: IDCARD_VALIDATE
     }
   },
   created () {

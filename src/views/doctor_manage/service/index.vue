@@ -37,7 +37,7 @@
 
         <span slot="action" slot-scope="text, record">
           <template>
-            <a @click="handleEdit(record)">待审核</a>
+            <a @click="handleAudit(record)">审核</a>
           </template>
         </span>
       </s-table>
@@ -88,10 +88,15 @@
       dataIndex: 'auditStatus',
     },
     {
-      title: '操作',
+      title: '是否启用',
       dataIndex: 'status',
       scopedSlots: { customRender: 'disable' }
-    },
+    },{
+      title: '操作',
+      dataIndex: 'action',
+      width: '150px',
+      scopedSlots: { customRender: 'action' }
+    }
   ]
 
   export default {
@@ -104,7 +109,7 @@
     data() {
       return {
         searchList: [{
-          field: 'doctorNam',
+          field: 'doctorName',
           label: '医生姓名'
         },{
           field: 'doctorPhone',
@@ -155,8 +160,12 @@
         this.queryParam = params;
         this.$refs.table.refresh(true)
       },
-      handleAudit() {
-        if(!this.selectedIds.length){
+      handleAudit(record) {
+        let ids = this.selectedIds;
+        if(record.id){
+          ids = [record.id];
+        }
+        if(!ids.length){
           return this.$message.warn('请选择需要操作的数据')
         }
         this.$confirm({
@@ -168,7 +177,7 @@
           onOk: async () => {
             const result = await serviceAudit({
               auditType: '驳回',
-              ids: this.selectedIds
+              ids: ids
             })
             if (result.success) {
               this.$message.info(`操作成功`)
@@ -183,7 +192,7 @@
             }
             const result = await serviceAudit({
               auditType: '通过',
-              ids: this.selectedIds
+              ids: ids
             })
             if (result.success) {
               this.$message.info(`操作成功`)
