@@ -1,35 +1,35 @@
 <template>
   <page-header-wrapper>
-  <div class="account-settings-info-view">
-    <a-row :gutter="16" type="flex" justify="center">
-      <a-col :order="isMobile ? 2 : 1" :md="24" :lg="16">
-        <a-form layout="vertical">
-          <a-form-item
-            label="原密码"
-            :required="true"
-          >
-            <a-input-password v-model="passwd" placeholder="请输入原密码"/>
-          </a-form-item>
+    <div class="account-settings-info-view">
+      <a-row :gutter="16" type="flex" justify="center">
+        <a-col :order="isMobile ? 2 : 1" :md="24" :lg="16">
+          <a-form layout="vertical">
+            <a-form-item
+              label="原密码"
+              :required="true"
+            >
+              <a-input-password v-model="oldPass" placeholder="请输入原密码"/>
+            </a-form-item>
 
-          <a-form-item
-            label="新密码"
-            :required="true"
-          >
-            <a-input-password v-model="passwd" placeholder="请输入新密码"/>
-          </a-form-item>
-          <a-form-item
-            label="确认密码"
-            :required="true"
-          >
-            <a-input-password v-model="passwd" placeholder="请再次确认密码"/>
-          </a-form-item>
+            <a-form-item
+              label="新密码"
+              :required="true"
+            >
+              <a-input-password v-model="newPass" placeholder="请输入新密码"/>
+            </a-form-item>
+            <a-form-item
+              label="确认密码"
+              :required="true"
+            >
+              <a-input-password v-model="checkPass" placeholder="请再次确认密码"/>
+            </a-form-item>
 
 
-          <a-form-item style="text-align: center">
-            <a-button type="primary" @click="onSaveClick">保存</a-button>
-            <a-button style="margin-left: 10px;" @click="$router.go(-1)">取消</a-button>
-          </a-form-item>
-        </a-form>
+            <a-form-item style="text-align: center">
+              <a-button type="primary" @click="onSaveClick">保存</a-button>
+              <a-button style="margin-left: 10px;" @click="$router.go(-1)">取消</a-button>
+            </a-form-item>
+          </a-form>
 
       </a-col>
       <a-col :order="1" :md="24" :lg="8" :style="{ minHeight: '180px' }">
@@ -41,78 +41,52 @@
         <!--</div>-->
       </a-col>
 
-    </a-row>
+      </a-row>
 
-    <avatar-modal ref="modal" @ok="setavatar"/>
-
-  </div>
+    </div>
   </page-header-wrapper>
 </template>
 
 <script>
-  import AvatarModal from './AvatarModal'
   import { baseMixin } from '@/store/app-mixin'
   import md5 from 'md5'
-  import { saveLognUserInfo } from '@/api/permissionService'
+  import { adminChangePassword } from '@/api/adminService'
 
   export default {
-  mixins: [baseMixin],
-  components: {
-    AvatarModal
-  },
-  data () {
-    return {
-      // cropper
-      preview: {},
-      option: {
-        img: this.$store.getters.userInfo.avatar,
-        info: true,
-        size: 1,
-        outputType: 'jpeg',
-        canScale: false,
-        autoCrop: true,
-        // 只有自动截图开启 宽度高度才生效
-        autoCropWidth: 180,
-        autoCropHeight: 180,
-        fixedBox: true,
-        // 开启宽度和高度比例
-        fixed: true,
-        fixedNumber: [1, 1]
-      },
-      passwd: '',
-      name: '',
-      lastPasswd: ''
-    }
-  },
-  created(){
-    this.name = this.$store.getters.userInfo.name;
-    this.passwd = this.$store.getters.userInfo.passwd;
-    this.lastPasswd = this.$store.getters.userInfo.passwd;
-  },
-  methods: {
-    setavatar (url) {
-      this.option.img = url
+    mixins: [baseMixin],
+    data() {
+      return {
+        oldPass: '',
+        newPass: '',
+        checkPass: ''
+      }
     },
-    async onSaveClick(){
-      const params = {
-        name: this.name,
-        avatar: this.option.img,
-        id: this.$store.getters.userInfo.id,
-        passwd: this.passwd
-      }
-      debugger
-      if(this.passwd !== this.lastPasswd){ //如果修改过密码的话 需要重新加密
-        params.passwd = md5(this.passwd);
-      }
-      const result = await saveLognUserInfo(params);
-      if(result.success){
-        this.$message.success('保存成功')
-      }else{
-        this.$message.error(result.msg);
+    created() {
+
+    },
+    methods: {
+      async onSaveClick() {
+        const params = {
+          oldPass: this.oldPass,
+          newPass: this.newPass
+        }
+        if(!this.oldPass.length || !this.newPass.length || !this.checkPass.length){
+          return this.$message.warning('请填写必填项')
+        }
+        if (this.newPass !== this.checkPass) {
+          return this.$message.error('两次输入密码不一致，请检查！')
+        }
+        params.oldPass = md5(params.oldPass)
+        params.newPass = md5(params.newPass)
+        const result = await adminChangePassword(params)
+        if (result.success) {
+          this.$message.success('操作成功')
+        } else {
+          this.$message.error(result.msg)
+        }
       }
     }
   }
-}
 </script>
 
 <style lang="less" scoped>
@@ -140,10 +114,11 @@
       border-radius: 50%;
       border: 1px solid rgba(0, 0, 0, 0.2);
     }
+
     .mask {
       opacity: 0;
       position: absolute;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0, 0, 0, 0.4);
       cursor: pointer;
       transition: opacity 0.4s;
 

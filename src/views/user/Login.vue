@@ -130,7 +130,7 @@ export default {
       })
     },
     loginSuccess (res) {
-      this.$router.push({ path: '/user/blogger' })
+      this.$router.push({ path: '/' })
       setTimeout(() => {
         this.$notification.success({
           message: '欢迎',

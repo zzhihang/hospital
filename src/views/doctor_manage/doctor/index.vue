@@ -29,6 +29,7 @@
         ref="table"
         size="default"
         rowKey="key"
+        :scroll="{x: 1500}"
         :columns="columns"
         :data="loadData"
         :rowSelection="rowSelection"
@@ -115,6 +116,7 @@
       title: '操作',
       dataIndex: 'action',
       width: '200px',
+      fixed: 'right',
       scopedSlots: { customRender: 'action' }
     }
   ]
@@ -204,7 +206,9 @@
               this.confirmLoading = false
               return this.$message.warning('最多选择三个疾病标签，请调整');
             }
-            values.diseaseLabel = values.diseaseLabel.join(',');
+            if(values.diseaseLabel.join){
+              values.diseaseLabel = values.diseaseLabel.join(',');
+            }
             const result = await doctorSave(values)
             if(result.success){
               form.resetFields()

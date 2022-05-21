@@ -58,12 +58,10 @@ export function adminDelete (ids) {
   })
 }
 
-export function sys (ids) {
+export function adminChangePassword (data) {
   return request({
-    url: '/sysmenu/all',
+    url: '/sysuser/changePass',
     method: 'post',
-    data: {
-      ids
-    }
+    data: data
   })
 }
