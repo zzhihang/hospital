@@ -9,10 +9,11 @@
             :ids="selectedIds"
             url="/doctor/export"
           >导出</button-export>
-          <button-export
+          <button-import
             style="margin-left: 8px"
-            url="/admin/user/tz/export"
-          >导入</button-export>
+            url="/doctor/import"
+            @importSuccess="onSearch"
+          >导入</button-import>
           <button-delete
             style="margin-left: 8px"
             url="/doctor/delete"
@@ -77,6 +78,7 @@
     hospitalDelete
   } from '@/api/doctorService'
   import ButtonDelete from '@/components/ButtonDelete/ButtonDelete'
+  import ButtonImport from '@/components/ButtonExport/ButtonImport'
 
   const columns = [
     {
@@ -127,6 +129,7 @@
       STable,
       CreateForm,
       ButtonExport,
+      ButtonImport,
       SearchForm,
       ButtonDelete
     },

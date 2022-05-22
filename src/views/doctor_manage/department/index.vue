@@ -9,11 +9,11 @@
             :ids="selectedIds"
             url="/sysdept/export"
           >导出</button-export>
-          <button-export
+          <button-import
             style="margin-left: 8px"
-            url="/admin/user/tz/export"
-            bill-type="blog"
-          >导入</button-export>
+            url="/sysdept/import"
+            @importSuccess="onSearch"
+          >导入</button-import>
           <button-delete
             style="margin-left: 8px"
             url="/sysdept/delete"
@@ -68,6 +68,7 @@
   import SearchForm from '@/components/SearchForm/SearchForm'
   import { departmentList, departmentSave } from '@/api/doctorService'
   import ButtonDelete from '@/components/ButtonDelete/ButtonDelete'
+  import ButtonImport from '@/components/ButtonExport/ButtonImport'
 
   const columns = [
     {
@@ -93,6 +94,7 @@
       CreateForm,
       ButtonExport,
       ButtonDelete,
+      ButtonImport,
       SearchForm
     },
     data() {

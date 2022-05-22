@@ -7,7 +7,7 @@
             <a-upload
               name="file"
               :show-upload-list="false"
-              :beforeUpload="beforeUpload"
+              :customRequest="beforeUpload"
             >
               <a>更新</a>
             </a-upload>
@@ -18,9 +18,9 @@
         </span>
       </a-table>
     </a-card>
-    <a-card title="客服电话设置">
+    <a-card title="客服信息设置">
       <a-form :form="form" v-bind="formLayout">
-        <a-form-item label="显示方式">
+        <a-form-item label="客服信息">
           <a-radio-group
             button-style="solid"
             v-model="customerType"
@@ -37,7 +37,7 @@
           <a-upload
             name="file2"
             :show-upload-list="false"
-            :beforeUpload="beforeUpload2"
+            :customRequest="beforeUpload2"
           >
             <img :src="customerImg" alt="" width="100" style="display: block;margin-bottom: 10px">
             <a-button>点击上传</a-button>
@@ -114,7 +114,7 @@
       onRadioChange(e){
         this.customerType = e.target.value;
       },
-      async beforeUpload(file) {
+      async beforeUpload({file}) {
         const formData = new FormData()
         formData.append('file', file)
         const {data} = await this.$http.post('/upload', formData, {
@@ -130,7 +130,7 @@
           this.$message.error(result.msg);
         }
       },
-      async beforeUpload2(file){
+      async beforeUpload2({file}){
         const formData = new FormData()
         formData.append('file', file)
         const {data} = await this.$http.post('/upload', formData, {

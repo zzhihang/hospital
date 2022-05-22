@@ -9,11 +9,11 @@
             :ids="selectedIds"
             url="/doctorgs/export"
           >导出</button-export>
-          <button-export
+          <button-import
             style="margin-left: 8px"
-            url="/admin/user/tz/export"
-            bill-type="blog"
-          >导入</button-export>
+            url="/doctorgs/import"
+            @importSuccess="onSearch"
+          >导入</button-import>
         </search-form>
       </div>
 
@@ -50,13 +50,9 @@
   import { ENABLE_STATUS } from '@/utils/dict'
   import ButtonExport from '@/components/ButtonExport/ButtonExport'
   import SearchForm from '@/components/SearchForm/SearchForm'
-  import {
-    doctorDisable,
-    doctorEnable,
-    doctorSave,
-    hospitalDelete, serviceAudit, serviceDisable, serviceEnable,
-    serviceList
-  } from '@/api/doctorService'
+  import ButtonImport from '@/components/ButtonExport/ButtonImport'
+
+  import { serviceAudit, serviceDisable, serviceEnable, serviceList } from '@/api/doctorService'
 
   const columns = [
     {
@@ -104,7 +100,8 @@
     components: {
       STable,
       ButtonExport,
-      SearchForm
+      SearchForm,
+      ButtonImport
     },
     data() {
       return {

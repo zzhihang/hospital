@@ -8,11 +8,11 @@
             :ids="selectedIds"
             url="/userpatient/export"
           >导出</button-export>
-          <button-export
+          <button-import
             style="margin-left: 8px"
-            url="/userpatient/export"
-            bill-type="blog"
-          >导入</button-export>
+            url="/userpatient/import"
+            @importSuccess="onSearch"
+          >导入</button-import>
           <button-delete
             style="margin-left: 8px"
             url="/userpatient/delete"
@@ -68,6 +68,7 @@
   import { patientList, patientSave } from '@/api/customerService'
   import { SEX_TYPE } from '@/utils/dict'
   import ButtonDelete from '@/components/ButtonDelete/ButtonDelete'
+  import ButtonImport from '@/components/ButtonExport/ButtonImport'
 
   const columns = [
     {
@@ -124,6 +125,7 @@
       CreateForm,
       ButtonExport,
       ButtonDelete,
+      ButtonImport,
       SearchForm
     },
     data() {

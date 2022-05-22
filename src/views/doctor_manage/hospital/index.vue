@@ -9,11 +9,11 @@
             :ids="selectedIds"
             url="/syshospital/export"
           >导出</button-export>
-          <button-export
+          <button-import
             style="margin-left: 8px"
-            url="/admin/user/tz/export"
-            bill-type="blog"
-          >导入</button-export>
+            url="/syshospital/import"
+            @importSuccess="onSearch"
+          >导入</button-import>
           <button-delete
             style="margin-left: 8px"
             url="/syshospital/delete"
@@ -69,6 +69,7 @@
   import SearchForm from '@/components/SearchForm/SearchForm'
   import { hospitalDelete, hospitalList, hospitalSave } from '@/api/doctorService'
   import ButtonDelete from '@/components/ButtonDelete/ButtonDelete'
+  import ButtonImport from '@/components/ButtonExport/ButtonImport'
 
   const columns = [
     {
@@ -102,6 +103,7 @@
       CreateForm,
       ButtonExport,
       ButtonDelete,
+      ButtonImport,
       SearchForm
     },
     data() {
