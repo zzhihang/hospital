@@ -205,11 +205,11 @@
         this.confirmLoading = true
         form.validateFields(async (errors, values) => {
           if (!errors) {
-            if(values.diseaseLabel.length > 3){
-              this.confirmLoading = false
-              return this.$message.warning('最多选择三个疾病标签，请调整');
-            }
             if(values.diseaseLabel.join){
+              if(values.diseaseLabel.length > 3){
+                this.confirmLoading = false
+                return this.$message.warning('最多选择三个疾病标签，请调整');
+              }
               values.diseaseLabel = values.diseaseLabel.join(',');
             }
             const result = await doctorSave(values)
