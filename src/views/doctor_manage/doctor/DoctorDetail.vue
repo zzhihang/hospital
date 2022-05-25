@@ -16,8 +16,8 @@
       <div class="title">服务项目列表</div>
       <a-table
         style="margin-top: 10px"
-        row-key="id"
         :pagination="false"
+        row-key="id"
         :columns="goodsColumns"
         :data-source="tableData">
       </a-table>
@@ -26,14 +26,12 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import { userDisable, userEnable, userQuery, userSaveServiceRate } from '@/api/userService'
-  import EditServiceRate from '@/views/user/modules/EditServiceRate'
+  import { userSaveServiceRate } from '@/api/userService'
   import { doctorInfo } from '@/api/doctorService'
 
   export default {
     components: {
-      EditServiceRate
+
     },
     data() {
       return {

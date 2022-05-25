@@ -171,7 +171,7 @@ export const asyncRouterMap = [
         path: '/dictionary',
         name: 'dictionary',
         component: RouteView,
-        redirect: '/dictionary',
+        redirect: '/dictionary/list',
         meta: { title: '字典配置', icon: 'warning'},
         children: [
           {
