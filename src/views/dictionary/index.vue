@@ -7,6 +7,9 @@
         :columns="columns"
         :dataSource="list"
       >
+        <span slot="detailRender" slot-scope="text, record">
+          {{getDetailShow(record)}}
+        </span>
         <span slot="action" slot-scope="text, record">
           <template>
             <a @click="handleEdit(record)">更新</a>
@@ -47,6 +50,7 @@
           },{
             title: '细节',
             dataIndex: 'val',
+            scopedSlots: { customRender: 'detailRender' }
           },{
             title: '操作',
             width: '150px',
@@ -61,6 +65,15 @@
       this.getList()
     },
     methods: {
+      getDetailShow(data){
+        if([1, 2, 3].includes(data.id)){
+          return `${data.val}%`
+        }else if(data.id === 4){
+          return `${data.val}h`
+        }else{
+          return `就诊时间后${data.val}h`
+        }
+      },
       handleEdit (record) {
         this.visible = true
         this.mdl = { ...record }
