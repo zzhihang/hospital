@@ -61,10 +61,9 @@
         <a-form-item label="疾病标签">
           <a-select
             v-decorator="['diseaseLabel', {rules: [{required: true, message: '请输入'}]}]"
-            mode="tags"
+            mode="multiple"
             style="width: 100%"
             placeholder="请选择疾病标签"
-            :maxTagCount="3"
           >
             <a-select-option
               v-for="(item, index) in diseaseLabelList"
